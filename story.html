@@ -6,6 +6,12 @@
     <title>A Day in the Life - TCP/IP Story | Syntax Error</title>
     <link rel="stylesheet" href="styles.css">
     <style>
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 120px; /* Offset for sticky header */
+        }
+
         /* Additional styles for story mode */
         .story-header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -2296,9 +2302,9 @@ Server just sends TEXT. Browser does the rest!</code></pre>
 3. Send: GET /index.html HTTP/1.1
 4. Receive: HTML text
 5. Parse HTML, discover resources:
-   → <link href="style.css">
-   → <script src="app.js">
-   → <img src="logo.png">
+   → &lt;link href="style.css"&gt;
+   → &lt;script src="app.js"&gt;
+   → &lt;img src="logo.png"&gt;
 6. Make MORE HTTP requests:
    → GET /style.css
    → GET /app.js
@@ -5700,6 +5706,22 @@ Your Computer (192.168.1.105):
             }, observerOptions);
             
             chapters.forEach(chapter => observer.observe(chapter));
+        });
+        
+        // Debug: Check if all chapter IDs exist
+        window.addEventListener('load', function() {
+            console.log('Total sections on page:', document.querySelectorAll('section').length);
+            console.log('Sections with class="chapter":', document.querySelectorAll('section.chapter').length);
+            console.log('All IDs on page:', Array.from(document.querySelectorAll('[id]')).map(el => el.id));
+            
+            for (let i = 0; i <= 8; i++) {
+                const chapter = document.getElementById('chapter' + i);
+                if (!chapter) {
+                    console.error('Chapter ' + i + ' not found!');
+                } else {
+                    console.log('Chapter ' + i + ' exists at position:', chapter.offsetTop);
+                }
+            }
         });
     </script>
 </body>

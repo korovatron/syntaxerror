@@ -499,19 +499,8 @@ function resetQuiz() {
 
 // Smooth scrolling for navigation links and initialization
 document.addEventListener('DOMContentLoaded', function() {
-    // Smooth scroll for anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                target.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
-        });
-    });
+    // Note: Smooth scrolling is now handled by CSS (scroll-behavior: smooth; scroll-padding-top: 80px;)
+    // No JavaScript needed for anchor link scrolling
     
     // Initialize packet journey status
     const journeyStatus = document.getElementById('journey-status');
