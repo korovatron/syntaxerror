@@ -1,0 +1,248 @@
+4.9 Fundamentals of communication and networking
+ 4.9.1 Communication
+ 4.9.1.1 Communication methods
+ Content Additional information
+ Define serial and parallel transmission methods
+ and discuss the advantages of serial over
+ parallel transmission.
+ Define and compare synchronous and
+ asynchronous data transmission.
+ Describe the purpose of start and stop bits in
+ asynchronous data transmission.
+ 4.9.1.2 Communication basics
+ Content Additional information
+ Define:
+ • baud rate
+ • bit rate
+ • bandwidth
+ • latency
+ • protocol.
+ Differentiate between baud rate and bit rate. Bit rate can be higher than baud rate if more
+ than one bit is encoded in each signal change.
+ Understand the relationship between bit rate
+ and bandwidth.
+ Bit rate is directly proportionate to bandwidth.
+ 82   Visit for the most up-to-date specification, resources, support and administration
+4.9.2 Networking
+ 4.9.2.1 Network topology
+ Content Additional information
+ Understand:
+ • physical star topology
+ • logical bus network topology
+ and:
+ • differentiate between them
+ • explain their operation
+ A network physically wired in star topology can
+ behave logically as a bus network by using a
+ bus protocol and appropriate physical switching.
+ 4.9.2.2 Types of networking between hosts
+ Content Additional information
+ Explain the following and describe situations
+ where they might be used:
+ • peer-to-peer networking
+ • client-server networking.
+ In a peer-to-peer network, each computer has
+ equal status. In a client-server network, most
+ computers are nominated as clients and one or
+ more as servers. The clients request services
+ from the servers, which provide these services,
+ for example file server, email server.
+ 4.9.2.3 Wireless networking
+ Content Additional information
+ Explain the purpose of WiFi. A wireless local area network that is based on
+ international standards.
+ Used to enable devices to connect to a network
+ wirelessly.
+ Be familiar with the components required for
+ wireless networking.
+ Wireless network adapter.
+ Wireless access point.
+ Be familiar with how wireless networks are
+ secured.
+ Strong encryption of transmitted data using
+ WPA (Wifi Protected Access)/WPA2, SSID
+ (Service Set Identifier) broadcast disabled,
+ MAC (Media Access Control) address allow list.
+ Explain the wireless protocol Carrier Sense
+ Multiple Access with Collision Avoidance
+ (CSMA/CA) with and without Request to Send/
+ Clear to Send (RTS/CTS).
+ Knowledge of Carrier Sense Multiple Access/
+ Collection Detection (CSMA/CD) as used in, for
+ example, Ethernet, is not required.
+ Be familiar with the purpose of Service Set
+ Identifier (SSID).
+ AQA AS and A-level Computer Science . AS and A-level exams June 2016 onwards. Version 1.6 31 July 2023
+ Visit for the most up-to-date specification, resources, support and administration   83
+4.9.3 The Internet
+ 4.9.3.1 The Internet and how it works
+ Content Additional information
+ Understand the structure of the Internet.
+ Understand the role of packet switching and
+ routers.
+ Know the main components of a packet.
+ Define:
+ • router
+ • gateway.
+ Consider where and why they are used.
+ Explain how routing is achieved across the
+ Internet.
+ Describe the term 'uniform resource locator'
+ (URL) in the context of internetworking.
+ Explain the terms ‘fully qualified domain name’
+ (FQDN), ‘domain name’ and ‘IP address’.
+ Describe how domain names are organised.
+ Understand the purpose and function of the
+ domain service and its reliance on the Domain
+ Name Server (DNS) system.
+ Explain the service provided by Internet
+ registries and why they are needed.
+ 4.9.3.2 Internet security
+ Content Additional information
+ Understand how a firewall works (packet
+ filtering, proxy server, stateful inspection).
+ Explain symmetric and asymmetric (private/
+ public key) encryption and key exchange.
+ Explain how digital certificates and digital
+ signatures are obtained and used.
+ 84   Visit for the most up-to-date specification, resources, support and administration
+Content Additional information
+ Discuss worms, trojans and viruses, and the
+ vulnerabilities that they exploit.
+ Discuss how improved code quality, monitoring
+ and protection can be used to address worms,
+ trojans and viruses.
+ 4.9.4 The Transmission Control Protocol/Internet Protocol (TCP/IP)
+ protocol
+ 4.9.4.1 TCP/IP
+ Content Additional information
+ Describe the role of the four layers of the
+ TCP/IP stack (application, transport, network,
+ link).
+ Describe the role of sockets in the TCP/IP
+ stack.
+ Be familiar with the role of MAC (Media Access
+ Control) addresses.
+ Explain what the well-known ports and client
+ ports are used for and the differences between
+ them.
+ 4.9.4.2 Standard application layer protocols
+ Content Additional information
+ Be familiar with the following protocols:
+ • FTP (File Transfer Protocol)
+ • HTTP (Hypertext Transfer Protocol)
+ • HTTPS (Hypertext Transfer Protocol
+ Secure)
+ • POP3 (Post Office Protocol (v3))
+ • SMTP (Simple Mail Transfer Protocol)
+ • SSH (Secure Shell).
+ Be familiar with FTP client software and an FTP
+ server, with regard to transferring files using
+ anonymous and non-anonymous access.
+ Be familiar with how SSH is used for remote
+ management.
+ AQA AS and A-level Computer Science . AS and A-level exams June 2016 onwards. Version 1.6 31 July 2023
+ Visit for the most up-to-date specification, resources, support and administration   85
+Content Additional information
+ Know how an SSH client is used to make a
+ TCP connection to a remote port for the
+ purpose of sending commands to this port using
+ application level protocols such as GET for
+ HTTP, SMTP commands for sending email and
+ POP3 for retrieving email.
+ Be familiar with using SSH to log in securely to
+ a remote computer and execute commands.
+ Explain the role of an email server in retrieving
+ and sending email.
+ Explain the role of a web server in serving up
+ web pages in text form.
+ Understand the role of a web browser in
+ retrieving web pages and web page resources
+ and rendering these accordingly.
+ 4.9.4.3 IP address structure
+ Content Additional information
+ Know that an IP address is split into a network
+ identifier part and a host identifier part.
+ 4.9.4.4 Subnet masking
+ Content Additional information
+ Know that networks can be divided into subnets
+ and know how a subnet mask is used to identify
+ the network identifier part of the IP address.
+ 4.9.4.5 IP standards
+ Content Additional information
+ Know that there are currently two standards of
+ IP address, v4 and v6.
+ Know why v6 was introduced.
+ 86   Visit for the most up-to-date specification, resources, support and administration
+4.9.4.6 Public and private IP addresses
+ Content Additional information
+ Distinguish between routable and non-routable
+ IP addresses.
+ 4.9.4.7 Dynamic Host Configuration Protocol (DHCP)
+ Content Additional information
+ Understand the purpose and function of the
+ DHCP system.
+ 4.9.4.8 Network Address Translation (NAT)
+ Content Additional information
+ Explain the basic concept of NAT and why it is
+ used.
+ 4.9.4.9 Port forwarding
+ Content Additional information
+ Explain the basic concept of port forwarding
+ and why it is used.
+ 4.9.4.10 Client server model
+ Content Additional information
+ Be familiar with the client server model. Client sends a request message to server,
+ server responds to request by replying with a
+ response message to client.
+ Be familiar with the Websocket protocol and
+ know why it is used and where it is used.
+ The Websocket specification defines an API
+ (Application Programming Interface)
+ establishing a full-duplex 'socket' connection
+ between a web browser and a server over TCP.
+ This means that there is a persistent connection
+ between client and server, allowing both parties
+ to send data at any time.
+ AQA AS and A-level Computer Science . AS and A-level exams June 2016 onwards. Version 1.6 31 July 2023
+ Visit for the most up-to-date specification, resources, support and administration   87
+Content Additional information
+ Be familiar with the principles of Web CRUD
+ Applications and REST:
+ • CRUD is an acronym for:
+ • C – Create
+ • R – Retrieve
+ • U – Update
+ • D – Delete.
+ • REST enables CRUD to be mapped to
+ database functions (SQL) as follows:
+ • GET → SELECT
+ • POST → INSERT
+ • DELETE → DELETE
+ • PUT → UPDATE.
+ Students should understand the principles:
+ • database connected to browser using
+ REST – Representational State Transfer 
+which relies on HTTP request methods
+ • REST allows JavaScript to talk to server
+ through HTTP
+ • REST API (Application Programming
+ Interface) created and run on server,
+ browser Javascript calls API
+ • JSON (JavaScript Object Notation) or
+ XML can be used to transmit data
+ between a server and web application
+ • Javascript referenced by HTML file, eg
+ index.html, is run in browser.
+ Compare JSON (Java script object notation)
+ with XML.
+ JSON compared with XML is:
+ • easier for a human to read
+ • more compact
+ • easier to create
+ • easier for computers to parse and
+ therefore quicker to parse.
+ 4.9.4.11 Thin- versus thick-client computing
+ Content Additional information
+ Compare and contrast thin-client computing
+ with thick-client computing

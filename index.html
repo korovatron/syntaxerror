@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Syntax Error - AQA A Level Computer Science</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #1e293b;
+        }
+
+        /* Hamburger Menu */
+        .hamburger {
+            position: fixed;
+            top: 1.5rem;
+            left: 1.5rem;
+            z-index: 1000;
+            background-color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 0.75rem;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+        }
+
+        .hamburger:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+        }
+
+        .hamburger-icon {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            width: 28px;
+        }
+
+        .hamburger-icon span {
+            display: block;
+            width: 100%;
+            height: 3px;
+            background-color: #3b82f6;
+            border-radius: 2px;
+            transition: all 0.3s;
+        }
+
+        .hamburger.active .hamburger-icon span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
+        }
+
+        .hamburger.active .hamburger-icon span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active .hamburger-icon span:nth-child(3) {
+            transform: rotate(-45deg) translate(8px, -8px);
+        }
+
+        /* Sidebar Menu */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -320px;
+            width: 320px;
+            height: 100vh;
+            background-color: #1e293b;
+            color: white;
+            transition: left 0.3s;
+            z-index: 999;
+            overflow-y: auto;
+            box-shadow: 4px 0 20px rgba(0,0,0,0.3);
+        }
+
+        .sidebar.active {
+            left: 0;
+        }
+
+        .sidebar-header {
+            padding: 2rem 1.5rem;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            border-bottom: 2px solid rgba(255,255,255,0.1);
+        }
+
+        .sidebar-header h2 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar-header p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .sidebar-nav {
+            padding: 1.5rem 0;
+        }
+
+        .nav-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .nav-section-title {
+            padding: 0.75rem 1.5rem;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #94a3b8;
+            font-weight: 600;
+        }
+
+        .nav-item {
+            display: block;
+            padding: 1rem 1.5rem;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s;
+            border-left: 4px solid transparent;
+        }
+
+        .nav-item:hover:not(.disabled) {
+            background-color: rgba(255,255,255,0.1);
+            border-left-color: #3b82f6;
+        }
+
+        .nav-item.active {
+            background-color: rgba(59, 130, 246, 0.2);
+            border-left-color: #3b82f6;
+        }
+
+        .nav-item .item-number {
+            display: inline-block;
+            font-weight: 700;
+            color: #3b82f6;
+            min-width: 3rem;
+        }
+
+        .nav-item .item-title {
+            display: inline;
+        }
+
+        .nav-item.disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        /* Overlay */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+            z-index: 998;
+        }
+
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Main Content */
+        .main-content {
+            transition: margin-left 0.3s;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .page-header {
+            background-color: white;
+            border-radius: 15px;
+            padding: 3rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .page-header .subtitle {
+            font-size: 1.3rem;
+            color: #64748b;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-header .spec-ref {
+            display: inline-block;
+            background-color: #dbeafe;
+            color: #1e40af;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+            margin-top: 1rem;
+        }
+
+        /* Content Card */
+        .content-card {
+            background-color: white;
+            border-radius: 15px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .content-card h2 {
+            color: #1e293b;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+        }
+
+        .content-card p {
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        /* CTA Button */
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            color: white;
+            padding: 1.25rem 3rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+            margin-top: 1rem;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 25px rgba(59, 130, 246, 0.6);
+        }
+
+        /* Feature Grid */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card p {
+            color: rgba(255,255,255,0.9);
+            line-height: 1.6;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .hamburger {
+                top: 1rem;
+                left: 1rem;
+            }
+
+            .main-content {
+                padding: 1rem;
+            }
+
+            .page-header {
+                padding: 2rem 1.5rem;
+            }
+
+            .page-header h1 {
+                font-size: 2rem;
+            }
+
+            .content-card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hamburger Menu Button -->
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <div class="hamburger-icon">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </button>
+
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h2>Syntax Error</h2>
+            <p>AQA A Level Computer Science</p>
+        </div>
+        <nav class="sidebar-nav">
+            <div class="nav-section">
+                <div class="nav-section-title">Specification Coverage</div>
+                <a href="story.html" class="nav-item active">
+                    <span class="item-number">4.9</span>
+                    <span class="item-title">Fundamentals of communication and networking</span>
+                </a>
+                <a href="#" class="nav-item disabled">
+                    <span class="item-number">4.1</span>
+                    <span class="item-title">Fundamentals of programming (Coming Soon)</span>
+                </a>
+                <a href="#" class="nav-item disabled">
+                    <span class="item-number">4.2</span>
+                    <span class="item-title">Fundamentals of data structures (Coming Soon)</span>
+                </a>
+                <a href="#" class="nav-item disabled">
+                    <span class="item-number">4.3</span>
+                    <span class="item-title">Fundamentals of algorithms (Coming Soon)</span>
+                </a>
+                <a href="#" class="nav-item disabled">
+                    <span class="item-number">4.4</span>
+                    <span class="item-title">Theory of computation (Coming Soon)</span>
+                </a>
+                <a href="#" class="nav-item disabled">
+                    <span class="item-number">4.5</span>
+                    <span class="item-title">Fundamentals of data representation (Coming Soon)</span>
+                </a>
+                <a href="#" class="nav-item disabled">
+                    <span class="item-number">4.6</span>
+                    <span class="item-title">Fundamentals of computer systems (Coming Soon)</span>
+                </a>
+                <a href="#" class="nav-item disabled">
+                    <span class="item-number">4.7</span>
+                    <span class="item-title">Fundamentals of computer organisation (Coming Soon)</span>
+                </a>
+                <a href="#" class="nav-item disabled">
+                    <span class="item-number">4.8</span>
+                    <span class="item-title">Consequences of uses of computing (Coming Soon)</span>
+                </a>
+                <a href="#" class="nav-item disabled">
+                    <span class="item-number">4.10</span>
+                    <span class="item-title">Fundamentals of databases (Coming Soon)</span>
+                </a>
+                <a href="#" class="nav-item disabled">
+                    <span class="item-number">4.11</span>
+                    <span class="item-title">Big Data (Coming Soon)</span>
+                </a>
+                <a href="#" class="nav-item disabled">
+                    <span class="item-number">4.12</span>
+                    <span class="item-title">Fundamentals of functional programming (Coming Soon)</span>
+                </a>
+            </div>
+        </nav>
+    </aside>
+
+    <!-- Overlay -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <header class="page-header">
+                <h1>🎓 Syntax Error</h1>
+                <p class="subtitle">Making Computer Science Click</p>
+                <p class="spec-ref">AQA A Level Computer Science Teaching Resource</p>
+            </header>
+
+            <div class="content-card">
+                <h2>📚 Welcome to Your Complete A Level CS Resource</h2>
+                <p>
+                    This website provides comprehensive coverage of the AQA A Level Computer Science specification 
+                    through engaging narratives, interactive examples, and clear explanations.
+                </p>
+                <p>
+                    Instead of dry technical documentation, we teach concepts through stories that make 
+                    complex topics memorable and understandable. Think of it as learning CS through 
+                    real-world scenarios you already experience every day.
+                </p>
+                <div style="text-align: center; margin-top: 2rem;">
+                    <a href="story.html" class="cta-button">
+                        🚀 Start Learning - 4.9 Networking
+                    </a>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h2>✨ What's Available Now</h2>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h3>📡 4.9 Communication & Networking</h3>
+                        <p>
+                            Complete coverage through "A Day in the Life" - follow a student's digital day 
+                            to learn TCP/IP, routing, security, protocols, and more. All spec points covered!
+                        </p>
+                    </div>
+                    <div class="feature-card" style="opacity: 0.6;">
+                        <h3>💻 4.1 Programming</h3>
+                        <p>
+                            Coming Soon - Programming fundamentals, data types, control structures, 
+                            and object-oriented programming concepts.
+                        </p>
+                    </div>
+                    <div class="feature-card" style="opacity: 0.6;">
+                        <h3>🗄️ 4.2 Data Structures</h3>
+                        <p>
+                            Coming Soon - Arrays, lists, stacks, queues, trees, graphs, and hash tables 
+                            explained through practical examples.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h2>🎯 Why This Resource?</h2>
+                <p>
+                    <strong>📖 Story-Based Learning:</strong> Complex concepts taught through relatable narratives 
+                    that stick in your memory.
+                </p>
+                <p>
+                    <strong>🎨 Visual & Interactive:</strong> Diagrams, animations, and examples bring 
+                    abstract ideas to life.
+                </p>
+                <p>
+                    <strong>✅ Complete Coverage:</strong> Every specification point addressed with 
+                    exam-focused explanations.
+                </p>
+                <p>
+                    <strong>🎵 Cultural References:</strong> Subtle nods to music, films, and pop culture 
+                    make learning fun (spot the Beatles and Pink Floyd references!).
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Hamburger menu functionality
+        const hamburger = document.getElementById('hamburger');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+
+        function toggleMenu() {
+            hamburger.classList.toggle('active');
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+        }
+
+        hamburger.addEventListener('click', toggleMenu);
+        overlay.addEventListener('click', toggleMenu);
+
+        // Close menu on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && sidebar.classList.contains('active')) {
+                toggleMenu();
+            }
+        });
+    </script>
+</body>
+</html>
