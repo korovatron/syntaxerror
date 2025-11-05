@@ -68,6 +68,33 @@
         .chapter-menu a.active {
             background-color: #3b82f6;
         }
+
+        /* Accordion Styles */
+        .accordion-item {
+            margin-bottom: 0.5rem;
+        }
+
+        .accordion-header {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.9), rgba(139, 92, 246, 0.9));
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s;
+            user-select: none;
+        }
+
+        .accordion-header:hover {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 1), rgba(139, 92, 246, 1));
+            transform: translateX(5px);
+        }
+
+        .accordion-header.active {
+            background: linear-gradient(135deg, #10b981, #059669);
+            border-radius: 8px 8px 0 0;
+        }
         
         .chapter {
             background-color: white;
@@ -75,6 +102,65 @@
             padding: 3rem;
             margin: 3rem 0;
             box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            display: none; /* Hidden by default */
+        }
+
+        .chapter.active {
+            display: block; /* Show active chapter */
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Subsection Accordion */
+        .subsection-toggle {
+            background-color: #f1f5f9;
+            border: 2px solid #cbd5e1;
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            margin: 1rem 0;
+            cursor: pointer;
+            font-weight: 600;
+            color: #1e293b;
+            transition: all 0.3s;
+            user-select: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .subsection-toggle:hover {
+            background-color: #e2e8f0;
+            border-color: #94a3b8;
+        }
+
+        .subsection-toggle.active {
+            background-color: #dbeafe;
+            border-color: #3b82f6;
+            color: #1e40af;
+        }
+
+        .subsection-toggle::after {
+            content: '▼';
+            transition: transform 0.3s;
+        }
+
+        .subsection-toggle.active::after {
+            transform: rotate(180deg);
+        }
+
+        .subsection-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out;
+        }
+
+        .subsection-content.active {
+            max-height: 50000px;
+            transition: max-height 0.6s ease-in;
         }
         
         .chapter-number {
@@ -276,19 +362,84 @@
         </div>
     </header>
 
+    <script>
+        // Intercept nav-button clicks for chapter navigation
+        document.addEventListener('click', function(e) {
+            const navButton = e.target.closest('.nav-button');
+            if (navButton) {
+                e.preventDefault();
+                e.stopPropagation();
+                e.stopImmediatePropagation();
+                
+                const href = navButton.getAttribute('href') || navButton.getAttribute('data-target');
+                
+                if (href) {
+                    const targetChapter = href.replace('#', '');
+                    const chapterNum = targetChapter.replace('chapter', '');
+                    
+                    // Wait a tiny bit for DOM to be ready, then navigate
+                    setTimeout(function() {
+                        const chapters = document.querySelectorAll('.chapter');
+                        const accordionHeaders = document.querySelectorAll('.accordion-header');
+                        
+                        // Hide all chapters
+                        chapters.forEach(ch => ch.classList.remove('active'));
+                        accordionHeaders.forEach(h => h.classList.remove('active'));
+                        
+                        // Show target chapter
+                        const targetChapterElement = document.getElementById(targetChapter);
+                        const targetItem = document.querySelector(`.accordion-item[data-chapter="${chapterNum}"]`);
+                        const targetHeader = targetItem ? targetItem.querySelector('.accordion-header') : null;
+                        
+                        if (targetChapterElement && targetHeader) {
+                            targetChapterElement.classList.add('active');
+                            targetHeader.classList.add('active');
+                            window.scrollTo({ top: 0, behavior: 'smooth' });
+                        }
+                    }, 0);
+                }
+                return false;
+            }
+        }, true);
+    </script>
+
     <nav class="chapter-nav">
         <div class="container">
-            <ul class="chapter-menu">
-                <li><a href="#chapter0">Ch0: Setup Network</a></li>
-                <li><a href="#chapter1" class="active">Ch1: Morning Connection</a></li>
-                <li><a href="#chapter2">Ch2: First Website</a></li>
-                <li><a href="#chapter3">Ch3: Email Check</a></li>
-                <li><a href="#chapter4">Ch4: Social Media</a></li>
-                <li><a href="#chapter5">Ch5: Online Gaming</a></li>
-                <li><a href="#chapter6">Ch6: Secure Login</a></li>
-                <li><a href="#chapter7">Ch7: File Download</a></li>
-                <li><a href="#chapter8">Ch8: Home Access</a></li>
-            </ul>
+            <div style="display: flex; align-items: center; justify-content: center; gap: 1rem;">
+                <span style="font-weight: 600; font-size: 1.1rem;">📖 Select Chapter:</span>
+                <button id="chapter-accordion-toggle" style="background-color: rgba(255,255,255,0.2); border: none; color: white; padding: 0.75rem 1.5rem; border-radius: 25px; cursor: pointer; font-weight: 600; font-size: 0.9rem; transition: all 0.3s;">
+                    Show Chapter Menu ▼
+                </button>
+            </div>
+            <div id="chapter-accordion" style="display: none; margin-top: 1rem; max-width: 600px; margin-left: auto; margin-right: auto;">
+                <div class="accordion-item" data-chapter="0">
+                    <div class="accordion-header">Ch 0: Setup Network 🏠</div>
+                </div>
+                <div class="accordion-item" data-chapter="1">
+                    <div class="accordion-header">Ch 1: Morning Connection ☀️</div>
+                </div>
+                <div class="accordion-item" data-chapter="2">
+                    <div class="accordion-header">Ch 2: First Website 🌐</div>
+                </div>
+                <div class="accordion-item" data-chapter="3">
+                    <div class="accordion-header">Ch 3: Email Check 📧</div>
+                </div>
+                <div class="accordion-item" data-chapter="4">
+                    <div class="accordion-header">Ch 4: Social Media 📱</div>
+                </div>
+                <div class="accordion-item" data-chapter="5">
+                    <div class="accordion-header">Ch 5: Online Gaming 🎮</div>
+                </div>
+                <div class="accordion-item" data-chapter="6">
+                    <div class="accordion-header">Ch 6: Secure Login 🔐</div>
+                </div>
+                <div class="accordion-item" data-chapter="7">
+                    <div class="accordion-header">Ch 7: File Download 📥</div>
+                </div>
+                <div class="accordion-item" data-chapter="8">
+                    <div class="accordion-header">Ch 8: Home Access 🏡</div>
+                </div>
+            </div>
         </div>
     </nav>
 
@@ -393,6 +544,33 @@
                             <strong>Physical:</strong> Star (wired to central point)<br>
                             <strong>Logical:</strong> Bus (data broadcast, devices check if for them)<br>
                             <strong>How:</strong> Switch uses bus protocol internally while maintaining physical star benefits
+                        </div>
+
+                        <div style="background-color: #fff7ed; padding: 1.5rem; border-radius: 8px; margin: 1.5rem 0; border-left: 4px solid #f97316;">
+                            <h5 style="margin-top: 0; color: #c2410c;">💡 But Why Would You Want This?</h5>
+                            
+                            <p style="margin: 0.5rem 0;"><strong>The "Best of Both Worlds" Approach:</strong></p>
+                            
+                            <ol style="line-height: 1.8; margin: 0.5rem 0;">
+                                <li><strong>Hardware simplicity:</strong> Bus protocols are simpler and cheaper to implement in switch hardware. You get reliable star wiring without expensive switching logic.</li>
+                                
+                                <li><strong>Backward compatibility:</strong> Older Ethernet standards (10BASE-T) were designed around bus topology collision detection (CSMA/CD). Modern switches can still support legacy devices.</li>
+                                
+                                <li><strong>Broadcasting made easy:</strong> Some network operations <em>need</em> to broadcast to all devices:
+                                    <ul style="margin-top: 0.5rem;">
+                                        <li>ARP requests ("Who has IP 192.168.1.5?")</li>
+                                        <li>DHCP discovery ("Any DHCP servers out there?")</li>
+                                        <li>Network discovery protocols</li>
+                                    </ul>
+                                    Bus topology makes this natural - just send once, everyone hears it.
+                                </li>
+                                
+                                <li><strong>Simpler switch design:</strong> A basic "learning switch" just forwards frames like a bus (broadcast), learning MAC addresses over time. Much simpler than a full routing table.</li>
+                            </ol>
+
+                            <div style="background-color: white; padding: 1rem; border-radius: 5px; margin-top: 1rem; border-left: 3px solid #10b981;">
+                                <strong>🏠 In Your Home Router:</strong> Your switch likely uses a hybrid approach - it <em>can</em> broadcast (bus-like) when needed for ARP/DHCP, but usually forwards directly to the right port (true switching) for better performance. You get bus simplicity when you need it, star efficiency when you don't!
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -5708,20 +5886,108 @@ Your Computer (192.168.1.105):
             chapters.forEach(chapter => observer.observe(chapter));
         });
         
-        // Debug: Check if all chapter IDs exist
-        window.addEventListener('load', function() {
-            console.log('Total sections on page:', document.querySelectorAll('section').length);
-            console.log('Sections with class="chapter":', document.querySelectorAll('section.chapter').length);
-            console.log('All IDs on page:', Array.from(document.querySelectorAll('[id]')).map(el => el.id));
+        // Accordion functionality for chapters
+        document.addEventListener('DOMContentLoaded', function() {
+            const accordionToggle = document.getElementById('chapter-accordion-toggle');
+            const accordion = document.getElementById('chapter-accordion');
+            const accordionHeaders = document.querySelectorAll('.accordion-header');
+            const chapters = document.querySelectorAll('.chapter');
             
-            for (let i = 0; i <= 8; i++) {
-                const chapter = document.getElementById('chapter' + i);
-                if (!chapter) {
-                    console.error('Chapter ' + i + ' not found!');
-                } else {
-                    console.log('Chapter ' + i + ' exists at position:', chapter.offsetTop);
-                }
+            // Toggle chapter menu visibility
+            accordionToggle.addEventListener('click', function() {
+                const isVisible = accordion.style.display === 'block';
+                accordion.style.display = isVisible ? 'none' : 'block';
+                this.textContent = isVisible ? 'Show Chapter Menu ▼' : 'Hide Chapter Menu ▲';
+            });
+            
+            // Handle chapter selection
+            accordionHeaders.forEach(header => {
+                header.addEventListener('click', function() {
+                    const chapterNum = this.parentElement.dataset.chapter;
+                    const targetChapter = document.getElementById('chapter' + chapterNum);
+                    
+                    // Hide all chapters
+                    chapters.forEach(ch => ch.classList.remove('active'));
+                    
+                    // Remove active state from all headers
+                    accordionHeaders.forEach(h => h.classList.remove('active'));
+                    
+                    // Show selected chapter
+                    if (targetChapter) {
+                        targetChapter.classList.add('active');
+                        this.classList.add('active');
+                        
+                        // Scroll to chapter
+                        targetChapter.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        
+                        // Hide the accordion menu
+                        accordion.style.display = 'none';
+                        accordionToggle.textContent = 'Show Chapter Menu ▼';
+                    }
+                });
+            });
+            
+            // Show first chapter by default
+            if (chapters.length > 0) {
+                chapters[0].classList.add('active');
+                accordionHeaders[0].classList.add('active');
             }
+            
+            // Auto-create subsection toggles for major sections
+            chapters.forEach(chapter => {
+                // Find all direct child divs with class containing specific types
+                const sections = Array.from(chapter.querySelectorAll('.behind-scenes, .concept-box, .example-box, .info-box, .spec-coverage'));
+                
+                sections.forEach((section, index) => {
+                    // Skip if already wrapped
+                    if (section.parentElement.classList.contains('subsection-content')) return;
+                    
+                    // Get the title from h3 or h4
+                    const title = section.querySelector('h3, h4');
+                    if (!title) return;
+                    
+                    // Create toggle button
+                    const toggle = document.createElement('div');
+                    toggle.className = 'subsection-toggle';
+                    toggle.textContent = title.textContent;
+                    
+                    // Create content wrapper
+                    const content = document.createElement('div');
+                    content.className = 'subsection-content';
+                    
+                    // Insert toggle before section
+                    section.parentNode.insertBefore(toggle, section);
+                    
+                    // Move section into content wrapper
+                    section.parentNode.insertBefore(content, section);
+                    content.appendChild(section);
+                    
+                    // Move consecutive sections into same wrapper if they don't have their own h3/h4
+                    let nextEl = content.nextElementSibling;
+                    while (nextEl && !nextEl.classList.contains('subsection-toggle') && 
+                           !sections.includes(nextEl)) {
+                        const temp = nextEl.nextElementSibling;
+                        content.appendChild(nextEl);
+                        nextEl = temp;
+                    }
+                });
+            });
+            
+            // Handle subsection toggles (multiple sections can be open)
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('subsection-toggle')) {
+                    const clickedToggle = e.target;
+                    const clickedContent = clickedToggle.nextElementSibling;
+                    
+                    // Simply toggle the clicked subsection
+                    clickedToggle.classList.toggle('active');
+                    if (clickedContent && clickedContent.classList.contains('subsection-content')) {
+                        clickedContent.classList.toggle('active');
+                    }
+                }
+            });
+
+
         });
     </script>
 </body>
