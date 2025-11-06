@@ -1220,6 +1220,56 @@ Subnet Mask:  255.255.255.  0
 Meaning: First 3 octets = network (192.168.1)
          Last octet = host (0-254 devices possible)</code></pre>
                     </div>
+
+                    <div style="background-color: #fef3c7; padding: 1.5rem; border-radius: 8px; margin-top: 2rem; border-left: 4px solid #f59e0b;">
+                        <h4 style="margin-top: 0; color: #92400e;">⚠️ Important: Reserved IP Addresses</h4>
+                        <p style="margin: 0.5rem 0; font-size: 1.05rem;">
+                            In the 192.168.1.0/24 network, you have 256 possible addresses (192.168.1.0 to 192.168.1.255), 
+                            but <strong>NOT ALL</strong> can be assigned to devices!
+                        </p>
+
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 1.5rem 0;">
+                            <div style="background-color: white; padding: 1rem; border-radius: 5px;">
+                                <h5 style="margin-top: 0; color: #dc2626;">🚫 192.168.1.0</h5>
+                                <p style="margin: 0.5rem 0;"><strong>Network Address</strong></p>
+                                <p style="margin: 0.5rem 0; font-size: 0.95rem;">
+                                    Identifies the network itself. Cannot be assigned to a device.
+                                </p>
+                                <p style="margin: 0.5rem 0; font-size: 0.9rem; font-style: italic;">
+                                    All host bits are 0
+                                </p>
+                            </div>
+
+                            <div style="background-color: white; padding: 1rem; border-radius: 5px;">
+                                <h5 style="margin-top: 0; color: #dc2626;">🚫 192.168.1.255</h5>
+                                <p style="margin: 0.5rem 0;"><strong>Broadcast Address</strong></p>
+                                <p style="margin: 0.5rem 0; font-size: 0.95rem;">
+                                    Used to send messages to ALL devices on the network. Cannot be assigned to a device.
+                                </p>
+                                <p style="margin: 0.5rem 0; font-size: 0.9rem; font-style: italic;">
+                                    All host bits are 1
+                                </p>
+                            </div>
+                        </div>
+
+                        <div style="background-color: #dcfce7; padding: 1rem; border-radius: 5px; margin-top: 1rem;">
+                            <p style="margin: 0; font-weight: 600; color: #065f46;">
+                                ✅ Usable IP Range: 192.168.1.1 to 192.168.1.254 (254 devices)
+                            </p>
+                            <p style="margin: 0.5rem 0 0 0; font-size: 0.95rem; color: #065f46;">
+                                Note: .1 is typically used for the router/gateway, leaving .2 to .254 for other devices (253 devices)
+                            </p>
+                        </div>
+
+                        <div style="background-color: white; padding: 1rem; border-radius: 5px; margin-top: 1rem;">
+                            <h5 style="margin-top: 0; color: #2563eb;">📡 Example: Broadcast in Action</h5>
+                            <p style="margin: 0.5rem 0; font-size: 0.95rem;">
+                                When your phone first connects and sends a DHCP Discover message, it broadcasts to 
+                                <code>255.255.255.255</code> (all networks). When a router wants to reach all devices on the 
+                                local network, it uses <code>192.168.1.255</code>.
+                            </p>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Private vs Public IPs -->
@@ -1261,6 +1311,70 @@ Meaning: First 3 octets = network (192.168.1)
 
                     <div style="background-color: #e0f2fe; padding: 1rem; border-radius: 5px; margin-top: 1rem;">
                         <p style="margin: 0;"><strong>💡 Key Concept:</strong> Your school has maybe 1000 devices with private IPs (192.168.1.x), but only ONE public IP address that they all share when accessing the internet. This is done through <strong>NAT</strong> (we'll see this in Chapter 2!).</p>
+                    </div>
+                </div>
+
+                <!-- Interactive Subnet Practice -->
+                <div class="example-box" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; margin: 2rem 0;">
+                    <h3 style="color: white;">🎯 Practice: Same Subnet?</h3>
+                    <p style="font-size: 1.05rem; opacity: 0.95;">
+                        Let's practice! Are these two IP addresses on the same subnet? 
+                        Use the subnet mask to determine which part is network and which is host.
+                    </p>
+                    
+                    <div style="background-color: rgba(255,255,255,0.95); color: #1e293b; padding: 2rem; border-radius: 12px; margin: 1.5rem 0;">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 2rem;">
+                            <div style="background-color: #dbeafe; padding: 1.5rem; border-radius: 8px;">
+                                <h4 style="color: #1e40af; margin-top: 0;">Device A</h4>
+                                <p style="font-size: 1.2rem; font-family: 'Courier New', monospace; font-weight: bold; margin: 0.5rem 0;" id="practice-ip1">192.168.1.50</p>
+                            </div>
+                            <div style="background-color: #dcfce7; padding: 1.5rem; border-radius: 8px;">
+                                <h4 style="color: #065f46; margin-top: 0;">Device B</h4>
+                                <p style="font-size: 1.2rem; font-family: 'Courier New', monospace; font-weight: bold; margin: 0.5rem 0;" id="practice-ip2">192.168.2.50</p>
+                            </div>
+                        </div>
+                        
+                        <div style="background-color: #fef3c7; padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
+                            <h4 style="color: #92400e; margin-top: 0;">Subnet Mask</h4>
+                            <p style="font-size: 1.2rem; font-family: 'Courier New', monospace; font-weight: bold; margin: 0.5rem 0;" id="practice-mask">255.255.255.0</p>
+                        </div>
+
+                        <div style="text-align: center; margin: 2rem 0;">
+                            <p style="font-size: 1.1rem; font-weight: 600; margin-bottom: 1rem;">Are they on the same subnet?</p>
+                            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                                <button onclick="checkSubnetAnswer(true)" style="background-color: #10b981; color: white; border: none; padding: 1rem 2rem; font-size: 1.1rem; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.2s;">
+                                    ✓ Yes, Same Subnet
+                                </button>
+                                <button onclick="checkSubnetAnswer(false)" style="background-color: #ef4444; color: white; border: none; padding: 1rem 2rem; font-size: 1.1rem; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.2s;">
+                                    ✗ No, Different Subnets
+                                </button>
+                            </div>
+                        </div>
+
+                        <div id="subnet-feedback" style="margin-top: 1.5rem; padding: 1rem; border-radius: 8px; display: none;"></div>
+                        
+                        <div id="subnet-explanation" style="margin-top: 1.5rem; background-color: #f8fafc; padding: 1.5rem; border-radius: 8px; display: none;">
+                            <h4 style="color: #0f172a; margin-top: 0;">📚 How to Solve This:</h4>
+                            <div style="font-family: 'Courier New', monospace; font-size: 0.95rem; line-height: 1.8; background-color: white; padding: 1rem; border-radius: 5px; margin: 1rem 0;">
+                                <div id="subnet-working"></div>
+                            </div>
+                        </div>
+
+                        <div style="text-align: center; margin-top: 1.5rem;">
+                            <button onclick="generateNewSubnetPractice()" style="background-color: #667eea; color: white; border: none; padding: 0.75rem 1.5rem; font-size: 1rem; border-radius: 8px; cursor: pointer; font-weight: 600;">
+                                🔄 Try Another Question
+                            </button>
+                            <p style="margin-top: 0.5rem; font-size: 0.9rem; opacity: 0.8;">
+                                Score: <span id="subnet-score">0</span> / <span id="subnet-total">0</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div style="background-color: rgba(255,255,255,0.1); padding: 1rem; border-radius: 8px; margin-top: 1rem;">
+                        <p style="margin: 0; font-size: 0.95rem; opacity: 0.9;">
+                            <strong>💡 Tip:</strong> Perform a bitwise AND operation between each IP address and the subnet mask. 
+                            If the results are the same, they're on the same subnet!
+                        </p>
                     </div>
                 </div>
 
@@ -5721,7 +5835,6 @@ Your Computer (192.168.1.105):
         </div>
     </footer>
 
-    <script src="script.js"></script>
     <script>
         // Chapter 2 packet animation functions
         function updateProtocolDisplayCh2() {
@@ -5988,6 +6101,213 @@ Your Computer (192.168.1.105):
             });
 
 
+        });
+
+        // Subnet Practice Tool
+        let currentSubnetPractice = null;
+        let subnetPracticeScore = 0;
+        let subnetPracticeTotal = 0;
+
+        // Helper function to convert IP to binary string
+        function ipToBinary(ip) {
+            return ip.split('.').map(octet => {
+                return parseInt(octet).toString(2).padStart(8, '0');
+            }).join('.');
+        }
+
+        // Helper function to perform AND operation
+        function andOperation(ip, mask) {
+            const ipParts = ip.split('.').map(Number);
+            const maskParts = mask.split('.').map(Number);
+            return ipParts.map((octet, i) => octet & maskParts[i]).join('.');
+        }
+
+        // Generate a random IP address within sensible ranges
+        function generateRandomIP() {
+            const ranges = [
+                [192, 168],
+                [10, Math.floor(Math.random() * 256)],
+                [172, 16 + Math.floor(Math.random() * 16)]
+            ];
+            
+            const range = ranges[Math.floor(Math.random() * ranges.length)];
+            const third = Math.floor(Math.random() * 256);
+            const fourth = Math.floor(Math.random() * 254) + 1;
+            
+            return `${range[0]}.${range[1]}.${third}.${fourth}`;
+        }
+
+        // Generate subnet mask
+        function generateRandomSubnetMask() {
+            const masks = ['255.255.255.0', '255.255.0.0', '255.255.255.128', '255.255.255.192', '255.255.254.0', '255.255.252.0'];
+            return masks[Math.floor(Math.random() * masks.length)];
+        }
+
+        // Generate new subnet practice question
+        function generateNewSubnetPractice() {
+            const mask = generateRandomSubnetMask();
+            const ip1 = generateRandomIP();
+            
+            let ip2;
+            const sameSubnet = Math.random() > 0.5;
+            
+            if (sameSubnet) {
+                const ip1Parts = ip1.split('.').map(Number);
+                const maskParts = mask.split('.').map(Number);
+                const ip2Parts = [...ip1Parts];
+                
+                for (let i = 3; i >= 0; i--) {
+                    if (maskParts[i] !== 255) {
+                        const networkBits = ip1Parts[i] & maskParts[i];
+                        const hostBits = ~maskParts[i] & 255;
+                        
+                        if (hostBits > 0) {
+                            let newHost;
+                            do {
+                                newHost = Math.floor(Math.random() * (hostBits + 1));
+                            } while (newHost === (ip1Parts[i] & hostBits));
+                            
+                            ip2Parts[i] = networkBits | newHost;
+                        }
+                        break;
+                    }
+                }
+                
+                ip2 = ip2Parts.join('.');
+            } else {
+                const ip1Parts = ip1.split('.').map(Number);
+                const maskParts = mask.split('.').map(Number);
+                const ip2Parts = [...ip1Parts];
+                
+                for (let i = 0; i < 4; i++) {
+                    if (maskParts[i] === 255) {
+                        ip2Parts[i] = (ip1Parts[i] + Math.floor(Math.random() * 10) + 1) % 256;
+                        break;
+                    } else if (maskParts[i] > 0) {
+                        const networkBits = ip1Parts[i] & maskParts[i];
+                        const changeAmount = Math.pow(2, 8 - maskParts[i].toString(2).split('1').length + 1);
+                        ip2Parts[i] = ((networkBits + changeAmount) % 256);
+                        break;
+                    }
+                }
+                
+                ip2 = ip2Parts.join('.');
+            }
+            
+            const network1 = andOperation(ip1, mask);
+            const network2 = andOperation(ip2, mask);
+            
+            currentSubnetPractice = {
+                ip1: ip1,
+                ip2: ip2,
+                mask: mask,
+                network1: network1,
+                network2: network2,
+                sameSubnet: network1 === network2
+            };
+            
+            document.getElementById('practice-ip1').textContent = ip1;
+            document.getElementById('practice-ip2').textContent = ip2;
+            document.getElementById('practice-mask').textContent = mask;
+            document.getElementById('subnet-feedback').style.display = 'none';
+            document.getElementById('subnet-explanation').style.display = 'none';
+        }
+
+        // Check subnet answer
+        function checkSubnetAnswer(userAnswer) {
+            if (!currentSubnetPractice) {
+                generateNewSubnetPractice();
+                return;
+            }
+            
+            subnetPracticeTotal++;
+            const correct = userAnswer === currentSubnetPractice.sameSubnet;
+            
+            if (correct) {
+                subnetPracticeScore++;
+            }
+            
+            document.getElementById('subnet-score').textContent = subnetPracticeScore;
+            document.getElementById('subnet-total').textContent = subnetPracticeTotal;
+            
+            const feedbackDiv = document.getElementById('subnet-feedback');
+            feedbackDiv.style.display = 'block';
+            
+            if (correct) {
+                feedbackDiv.style.backgroundColor = '#d1fae5';
+                feedbackDiv.style.borderLeft = '4px solid #10b981';
+                feedbackDiv.innerHTML = `
+                    <h4 style="color: #10b981; margin-top: 0;">✅ Correct!</h4>
+                    <p style="margin: 0;">The two devices are ${currentSubnetPractice.sameSubnet ? '' : '<strong>NOT</strong> '}on the same subnet.</p>
+                `;
+            } else {
+                feedbackDiv.style.backgroundColor = '#fee2e2';
+                feedbackDiv.style.borderLeft = '4px solid #ef4444';
+                feedbackDiv.innerHTML = `
+                    <h4 style="color: #ef4444; margin-top: 0;">❌ Incorrect</h4>
+                    <p style="margin: 0;">The correct answer is: The two devices are ${currentSubnetPractice.sameSubnet ? '' : '<strong>NOT</strong> '}on the same subnet.</p>
+                `;
+            }
+            
+            showSubnetWorking();
+        }
+
+        // Show the AND operation working
+        function showSubnetWorking() {
+            const explanationDiv = document.getElementById('subnet-explanation');
+            const workingDiv = document.getElementById('subnet-working');
+            
+            explanationDiv.style.display = 'block';
+            
+            const ip1Binary = ipToBinary(currentSubnetPractice.ip1);
+            const ip2Binary = ipToBinary(currentSubnetPractice.ip2);
+            const maskBinary = ipToBinary(currentSubnetPractice.mask);
+            const network1Binary = ipToBinary(currentSubnetPractice.network1);
+            const network2Binary = ipToBinary(currentSubnetPractice.network2);
+            
+            workingDiv.innerHTML = `<strong>Device A: ${currentSubnetPractice.ip1}</strong>
+Binary:    ${ip1Binary}
+
+<strong>Subnet Mask: ${currentSubnetPractice.mask}</strong>
+Binary:      ${maskBinary}
+
+<strong>AND Operation (A):</strong>
+${ip1Binary}
+${maskBinary} (AND)
+${'─'.repeat(35)}
+${network1Binary}
+
+<strong>Network Address (A): ${currentSubnetPractice.network1}</strong>
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+<strong>Device B: ${currentSubnetPractice.ip2}</strong>
+Binary:    ${ip2Binary}
+
+<strong>Subnet Mask: ${currentSubnetPractice.mask}</strong>
+Binary:      ${maskBinary}
+
+<strong>AND Operation (B):</strong>
+${ip2Binary}
+${maskBinary} (AND)
+${'─'.repeat(35)}
+${network2Binary}
+
+<strong>Network Address (B): ${currentSubnetPractice.network2}</strong>
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+<strong>CONCLUSION:</strong>
+Network A: ${currentSubnetPractice.network1}
+Network B: ${currentSubnetPractice.network2}
+${currentSubnetPractice.sameSubnet ? '✅ SAME network - devices CAN communicate directly' : '❌ DIFFERENT networks - need router to communicate'}`;
+        }
+
+        // Initialize on page load
+        window.addEventListener('DOMContentLoaded', function() {
+            if (document.getElementById('practice-ip1')) {
+                generateNewSubnetPractice();
+            }
         });
     </script>
 </body>
