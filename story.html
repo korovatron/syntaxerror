@@ -1275,15 +1275,45 @@ Meaning: First 3 octets = network (192.168.1)
                 <!-- Private vs Public IPs -->
                 <div class="example-box">
                     <h3>🏠 Private vs Public IP Addresses</h3>
+                    <h4 style="color: #1e40af; margin-top: 0.5rem;">(Also called Non-Routable vs Routable)</h4>
                     
                     <p style="margin: 1rem 0; font-size: 1.05rem;">
-                        <strong>Important:</strong> 192.168.1.105 is a <strong>private IP address</strong>. 
+                        <strong>Important:</strong> 192.168.1.105 is a <strong>private IP address</strong> 
+                        (also called a <strong>non-routable address</strong>). 
                         It only works inside the school network.
                     </p>
+                    
+                    <div style="background-color: #dbeafe; padding: 1rem; border-radius: 8px; margin: 1rem 0; border-left: 4px solid #3b82f6;">
+                        <h5 style="margin-top: 0; color: #1e40af;">📚 Different Terms, Same Concept:</h5>
+                        <p style="margin: 0.5rem 0;">
+                            These IP addresses have <strong>two common names</strong>. You need to know both:
+                        </p>
+                        <ul style="margin: 0.5rem 0; line-height: 1.8;">
+                            <li><strong>Private IPs</strong> = <strong>Non-Routable Addresses</strong>
+                                <ul style="margin-top: 0.3rem;">
+                                    <li>Cannot be used on the public internet</li>
+                                    <li>Internet routers will NOT forward packets with these addresses</li>
+                                    <li>Used internally within networks</li>
+                                </ul>
+                            </li>
+                            <li style="margin-top: 0.5rem;"><strong>Public IPs</strong> = <strong>Routable Addresses</strong>
+                                <ul style="margin-top: 0.3rem;">
+                                    <li>CAN be used on the public internet</li>
+                                    <li>Internet routers WILL forward packets with these addresses</li>
+                                    <li>Must be globally unique</li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <p style="margin: 0.5rem 0; padding: 0.5rem; background-color: white; border-radius: 5px;">
+                            <strong>Why "non-routable"?</strong> Because internet routers are configured to 
+                            <em>drop</em> (ignore) any packets with private IP addresses. This is by design - 
+                            it allows millions of networks to reuse the same private IP ranges without conflicts!
+                        </p>
+                    </div>
 
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin: 2rem 0;">
                         <div style="background-color: #fef3c7; padding: 1.5rem; border-radius: 8px;">
-                            <h4 style="margin-top: 0; color: #92400e;">🏠 Private IPs</h4>
+                            <h4 style="margin-top: 0; color: #92400e;">🏠 Private IPs (Non-Routable)</h4>
                             <p style="font-weight: 600;">Reserved ranges:</p>
                             <ul>
                                 <li>10.0.0.0 - 10.255.255.255</li>
@@ -1291,12 +1321,15 @@ Meaning: First 3 octets = network (192.168.1)
                                 <li>192.168.0.0 - 192.168.255.255</li>
                             </ul>
                             <p style="margin-top: 1rem;"><strong>Used for:</strong> Internal networks (homes, schools, offices)</p>
-                            <p><strong>Cannot:</strong> Be used directly on the internet</p>
-                            <p><strong>Advantage:</strong> Can be reused in different networks</p>
+                            <p><strong>Cannot:</strong> Be routed on the public internet</p>
+                            <p><strong>Advantage:</strong> Can be reused in different networks without conflicts</p>
+                            <p style="margin-top: 1rem; padding: 0.5rem; background-color: white; border-radius: 5px; font-size: 0.95rem;">
+                                <strong>Why non-routable?</strong> Internet routers are programmed to reject these addresses
+                            </p>
                         </div>
                         
                         <div style="background-color: #dbeafe; padding: 1.5rem; border-radius: 8px;">
-                            <h4 style="margin-top: 0; color: #1e40af;">🌐 Public IPs</h4>
+                            <h4 style="margin-top: 0; color: #1e40af;">🌐 Public IPs (Routable)</h4>
                             <p style="font-weight: 600;">Example:</p>
                             <ul>
                                 <li>203.0.113.5</li>
@@ -1304,13 +1337,19 @@ Meaning: First 3 octets = network (192.168.1)
                                 <li>142.250.185.46 (google.com)</li>
                             </ul>
                             <p style="margin-top: 1rem;"><strong>Used for:</strong> Devices directly on the internet</p>
-                            <p><strong>Must be:</strong> Globally unique</p>
+                            <p><strong>Must be:</strong> Globally unique (no duplicates allowed)</p>
                             <p><strong>Problem:</strong> Running out! (Why IPv6 exists)</p>
+                            <p style="margin-top: 1rem; padding: 0.5rem; background-color: white; border-radius: 5px; font-size: 0.95rem;">
+                                <strong>Why routable?</strong> Internet routers can forward packets to these addresses anywhere in the world
+                            </p>
                         </div>
                     </div>
 
                     <div style="background-color: #e0f2fe; padding: 1rem; border-radius: 5px; margin-top: 1rem;">
-                        <p style="margin: 0;"><strong>💡 Key Concept:</strong> Your school has maybe 1000 devices with private IPs (192.168.1.x), but only ONE public IP address that they all share when accessing the internet. This is done through <strong>NAT</strong> (we'll see this in Chapter 2!).</p>
+                        <p style="margin: 0;"><strong>💡 Key Concept:</strong> Your school has maybe 1000 devices with 
+                        <strong>private (non-routable) IPs</strong> like 192.168.1.x, but only ONE 
+                        <strong>public (routable) IP</strong> address that they all share when accessing the internet. 
+                        This is done through <strong>NAT</strong> (we'll see this in Chapter 2!).</p>
                     </div>
                 </div>
 
@@ -1681,7 +1720,9 @@ Gateway handles it from there!</code></pre>
                         <li>DHCP - Dynamic Host Configuration Protocol</li>
                         <li>IP address structure and allocation</li>
                         <li>Subnet masks and network vs host portions</li>
-                        <li>Private vs public IP addresses</li>
+                        <li>Network address (.0) and broadcast address (.255) - reserved addresses</li>
+                        <li>Private vs public IP addresses (also called non-routable vs routable)</li>
+                        <li>Why private IPs are non-routable (internet routers reject them)</li>
                         <li>Default gateway concept</li>
                         <li>DNS server addresses</li>
                         <li>MAC addresses (Media Access Control - unique hardware identifiers)</li>
