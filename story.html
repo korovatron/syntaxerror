@@ -1823,7 +1823,7 @@ Time to Live (TTL): 3600 seconds (cache for 1 hour)</code></pre>
 
                 <!-- TCP/IP Layers and Encapsulation -->
                 <div class="concept-box">
-                    <h3>📦 Step 2: Building the HTTP Request Packet</h3>
+                    <h3>📦 Step 2: Building the Network Packet</h3>
                     
                     <p style="font-size: 1.05rem; margin: 1rem 0;">
                         Now your browser knows the IP address (203.0.113.42), it needs to send an HTTP request. 
@@ -1838,11 +1838,16 @@ Time to Live (TTL): 3600 seconds (cache for 1 hour)</code></pre>
                         
                         <div style="background-color: white; padding: 1.5rem; border-radius: 8px; margin: 1.5rem 0;">
                             <label for="protocol-selector-ch2" style="font-weight: 600; font-size: 1.1rem; display: block; margin-bottom: 0.75rem;">
-                                📡 Select Protocol to Visualize:
+                                📡 Select Protocol to Visualise:
                             </label>
                             <select id="protocol-selector-ch2" onchange="updateProtocolDisplayCh2()" style="padding: 0.75rem; font-size: 1rem; border: 2px solid #3b82f6; border-radius: 5px; width: 100%; max-width: 400px; cursor: pointer;">
-                                <option value="http">HTTP - Web Browsing (Port 80)</option>
-                                <option value="https">HTTPS - Secure Web (Port 443)</option>
+                                <option value="http">🌐 HTTP - Web Browsing (Port 80)</option>
+                                <option value="https">🔒 HTTPS - Secure Web (Port 443)</option>
+                                <option value="email-smtp">📧 SMTP - Send Email (Port 25)</option>
+                                <option value="email-pop3">📥 POP3 - Receive Email (Port 110)</option>
+                                <option value="ftp">📁 FTP - File Transfer (Port 21)</option>
+                                <option value="ssh">💻 SSH - Remote Access (Port 22)</option>
+                                <option value="dns">🗂️ DNS - Domain Lookup (Port 53)</option>
                             </select>
                         </div>
 
@@ -5877,23 +5882,103 @@ Your Computer (192.168.1.105):
     </footer>
 
     <script>
+        // Protocol configurations
+        const protocolConfigs = {
+            http: {
+                senderTitle: '🌐 Web Browser',
+                senderSubtitle: '(Client)',
+                receiverTitle: '🖥️ Web Server',
+                receiverSubtitle: '(Server)',
+                appData: 'HTTP Request',
+                protocol: 'TCP',
+                port: '80',
+                protocolName: 'HTTP'
+            },
+            https: {
+                senderTitle: '🔒 Web Browser',
+                senderSubtitle: '(Client)',
+                receiverTitle: '🖥️ Secure Web Server',
+                receiverSubtitle: '(Server)',
+                appData: 'HTTPS Request',
+                protocol: 'TCP',
+                port: '443',
+                protocolName: 'HTTPS'
+            },
+            'email-smtp': {
+                senderTitle: '📧 Email Client',
+                senderSubtitle: '(Outlook/Gmail)',
+                receiverTitle: '📬 Mail Server',
+                receiverSubtitle: '(SMTP Server)',
+                appData: 'Email Message',
+                protocol: 'TCP',
+                port: '25',
+                protocolName: 'SMTP'
+            },
+            'email-pop3': {
+                senderTitle: '📧 Email Client',
+                senderSubtitle: '(Outlook/Gmail)',
+                receiverTitle: '📬 Mail Server',
+                receiverSubtitle: '(POP3 Server)',
+                appData: 'POP3 Request',
+                protocol: 'TCP',
+                port: '110',
+                protocolName: 'POP3'
+            },
+            ftp: {
+                senderTitle: '📁 FTP Client',
+                senderSubtitle: '(FileZilla)',
+                receiverTitle: '💾 FTP Server',
+                receiverSubtitle: '(File Server)',
+                appData: 'FTP Command',
+                protocol: 'TCP',
+                port: '21',
+                protocolName: 'FTP'
+            },
+            ssh: {
+                senderTitle: '💻 SSH Client',
+                senderSubtitle: '(Terminal)',
+                receiverTitle: '🖥️ Remote Server',
+                receiverSubtitle: '(SSH Server)',
+                appData: 'SSH Command',
+                protocol: 'TCP',
+                port: '22',
+                protocolName: 'SSH'
+            },
+            dns: {
+                senderTitle: '🌐 Application',
+                senderSubtitle: '(Any Program)',
+                receiverTitle: '🗂️ DNS Server',
+                receiverSubtitle: '(Name Server)',
+                appData: 'DNS Query',
+                protocol: 'UDP',
+                port: '53',
+                protocolName: 'DNS'
+            }
+        };
+
         // Chapter 2 packet animation functions
         function updateProtocolDisplayCh2() {
             const selector = document.getElementById('protocol-selector-ch2');
             const protocol = selector.value;
+            const config = protocolConfigs[protocol];
             
-            // Update based on protocol (HTTP or HTTPS)
-            const port = protocol === 'http' ? '80' : '443';
-            const protocolName = protocol === 'http' ? 'HTTP' : 'HTTPS';
+            if (!config) return;
+            
             const sourcePort = Math.floor(Math.random() * (65535 - 49152 + 1)) + 49152;
             const seqNumber = Math.floor(Math.random() * 10000) + 1000;
             
+            // Update sender and receiver titles
+            document.getElementById('sender-title-ch2').textContent = config.senderTitle;
+            document.querySelector('#sender-title-ch2').nextElementSibling.textContent = config.senderSubtitle;
+            document.getElementById('receiver-title-ch2').textContent = config.receiverTitle;
+            document.querySelector('#receiver-title-ch2').nextElementSibling.textContent = config.receiverSubtitle;
+            
             // Update transport headers
             const transportHTML = `
-                <div style="font-weight: bold;">TCP</div>
+                <div style="font-weight: bold;">${config.protocol}</div>
                 <div style="font-size: 0.7rem; margin-top: 2px;">Src: ${sourcePort}</div>
-                <div style="font-size: 0.7rem;">Dst: ${port}</div>
-                <div style="font-size: 0.7rem;">Seq: ${seqNumber}</div>
+                <div style="font-size: 0.7rem;">Dst: ${config.port}</div>
+                ${config.protocol === 'TCP' ? `<div style="font-size: 0.7rem;">Seq: ${seqNumber}</div>` : ''}
             `;
             
             document.getElementById('transport-header-send-ch2').innerHTML = transportHTML;
@@ -5903,9 +5988,9 @@ Your Computer (192.168.1.105):
             const dataLabels = document.querySelectorAll('#packet-journey-sender-ch2 .packet-data, #packet-journey-receiver-ch2 .packet-data');
             dataLabels.forEach((label, index) => {
                 if (index === 0 || index === 4) {
-                    label.textContent = protocolName + ' Request';
+                    label.textContent = config.appData;
                 } else {
-                    label.textContent = protocolName;
+                    label.textContent = config.protocolName;
                 }
             });
             
